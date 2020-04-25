@@ -21,7 +21,7 @@ func TestHandler_Hello(t *testing.T) {
 		bodyWant string
 	}{{
 		name:     "simple test",
-		joke:     &api.JokeResponse{"test joke"},
+		joke:     &api.JokeResponse{Joke: "test joke"},
 		codeWant: 200,
 		bodyWant: "test joke",
 	}}
@@ -36,7 +36,7 @@ func TestHandler_Hello(t *testing.T) {
 			h := handler.NewHandler(apiMock)
 			h.Hello(rr, req)
 
-			require.Equal(t, tt.bodyWant, string(rr.Body.Bytes()))
+			require.Equal(t, tt.bodyWant, rr.Body.String())
 			require.Equal(t, tt.codeWant, rr.Result().StatusCode)
 		})
 	}
