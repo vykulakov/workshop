@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"workshop/internal/api/jokes"
 
 	"github.com/go-chi/chi"
 	"github.com/ilyakaznacheev/cleanenv"
@@ -19,8 +20,9 @@ func main() {
 		log.Fatal(err)
 	}
 
+	j := jokes.NewJokeClient(c.JokeUrl)
+	h := handler.NewHandler(j)
 	r := chi.NewRouter()
-	h := handler.NewHandler()
 
 	r.Get("/hello", h.Hello)
 
